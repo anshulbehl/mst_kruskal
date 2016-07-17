@@ -34,7 +34,9 @@ def kruskal(graph):
             minimum_spanning_tree.add(edge)
     return minimum_spanning_tree
 
-with open('AdjacencyMatrix_of_Graph_G_N_100.txt') as ADJ:
+nodes = raw_input("Enter the number of nodes")
+file_name = "AdjacencyMatrix_of_Graph_G_N_%s.txt" % nodes
+with open(file_name) as ADJ:
     adj = ADJ.read()
 adj_matrix = []
 for row, line in enumerate(adj.split('\n')):
