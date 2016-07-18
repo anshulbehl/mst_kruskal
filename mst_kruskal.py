@@ -1,3 +1,5 @@
+import numpy
+
 parent = dict()
 rank = dict()
 
@@ -34,22 +36,25 @@ def kruskal(graph):
             minimum_spanning_tree.add(edge)
     return minimum_spanning_tree
 
-nodes = raw_input("Enter the number of nodes")
+nodes = input("Enter the number of nodes")
 file_name = "AdjacencyMatrix_of_Graph_G_N_%s.txt" % nodes
-with open(file_name) as ADJ:
-    adj = ADJ.read()
 adj_matrix = []
-for row, line in enumerate(adj.split('\n')):
-    adj_matrix.append(filter(None, line.lstrip().split('   ')))
-adj_matrix = [x for x in adj_matrix if x != []]
+with open(file_name) as ADJ:
+    for line in ADJ:
+        adj_matrix.append(list(filter(None,line.strip().lstrip().split('   '))))
 vertices = []
 edges = []
-for row_number, row in enumerate(adj_matrix):
-    for col_number, col in enumerate(row):
-        edges.append((int(adj_matrix[row_number][col_number].lstrip()), str(row_number), str(col_number)))
-    vertices.append(str(row_number))
-graph = {'vertices': vertices, 'edges': set(edges)}
+rows = len(adj_matrix)
+cols = len(adj_matrix[0])
+for row in range(rows):
+    for col in range(cols):
+        #import pdb; pdb.set_trace()
+        #edges.append((int(adj_matrix[row][col].lstrip()), str(row), str(col)))
+        edges.append((int(adj_matrix[row][col].lstrip()), row, col))
+    vertices.append(row)
 
+import pdb; pdb.set_trace()
+graph = {'vertices': vertices, 'edges': set(edges)}
 out_graph = kruskal(graph)
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 """
@@ -57,13 +62,13 @@ Output section of the program
 """
 print ("Total number of nodes = %s" % len(vertices))
 print ("Total number of edges in the minimum spanning three = %s" % len(out_graph))
-print "List of edges & their costs:"
+print ("List of edges & their costs:")
 for row in out_graph:
     print ('(%s,%s) edge cost: %s' %(row[1], row[2], row[0]))
-print "Total cost of minimum spanning three is= ",
+print ("Total cost of minimum spanning three is= ",)
 suma = []
 for row in out_graph:
     suma.append(row[0])
-print sum(suma)
+print (sum(suma))
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
